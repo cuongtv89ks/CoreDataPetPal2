@@ -127,8 +127,8 @@
 				D34D34C1211B689600D0DAB0 /* Friend+CoreDataProperties.swift */,
 				D34D34C2211B689600D0DAB0 /* Pet+CoreDataClass.swift */,
 				D34D34C3211B689600D0DAB0 /* Pet+CoreDataProperties.swift */,
-				D3264F66211200B000FA46DC /* Friend+CoreDataClass.swift */,
 				DD6B333F1F56E05F00F4C248 /* FriendData.swift */,
+				D3264F66211200B000FA46DC /* Friend+CoreDataClass.swift */,
 				DD6B33411F56E1A900F4C248 /* PetData.swift */,
 			);
 			path = Data;
