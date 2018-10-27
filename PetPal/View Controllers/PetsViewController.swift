@@ -71,6 +71,7 @@ class PetsViewController: UIViewController {
         request.sortDescriptors = [sort]
         do {
             fetchedRC = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+            fetchedRC.delegate = self
             try fetchedRC.performFetch()
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
@@ -93,9 +94,9 @@ class PetsViewController: UIViewController {
         pet.owner = friend
         
         appDelegate.saveContext()
-        refresh()
+        //refresh()
         
-		collectionView.reloadData()
+		//collectionView.reloadData()
 	}
     
     @IBAction func handleLongPress(gestureRecognizer: UIGestureRecognizer) {
@@ -108,7 +109,7 @@ class PetsViewController: UIViewController {
             context.delete(pet)
             appDelegate.saveContext()
             refresh()
-            collectionView.deleteItems(at: [indexPath])
+            //collectionView.deleteItems(at: [indexPath])
         }
     }
 }
@@ -184,6 +185,23 @@ extension PetsViewController: UIImagePickerControllerDelegate, UINavigationContr
 		collectionView?.reloadItems(at: [selected])
 		picker.dismiss(animated: true, completion: nil)
 	}
+}
+
+extension PetsViewController: NSFetchedResultsControllerDelegate {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        let index = indexPath ?? (newIndexPath ?? nil)
+        guard let cellIndex = index else {
+            return
+        }
+        switch type {
+        case .insert:
+            collectionView.insertItems(at: [cellIndex])
+        case .delete:
+            collectionView.deleteItems(at: [cellIndex])
+        default:
+            break
+        }
+    }
 }
 
 // Helper function inserted by Swift 4.2 migrator.
